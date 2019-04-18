@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+  <div class="container-fluid">
+    <a href="#" class="navbrand text-info h3">Mongo Scraper</a>
+    <button 
+    class="btn btn-info text-warning m-2"
+    (click)="onScrape()">Scrape New Articles!</button>
+    <button class="btn btn-info text-warning m-2"
+    (click)="onClear()">Clear Articles!</button>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#myNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="myNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a [routerLink]="['/routePath']" routerLinkActive="active"  class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/favorites']" class="nav-link">Saved Articles</a>
+        </li>
+      </ul>
+    </div>
+</div>
+</nav>
+  <div class="jumbotron bg-light" id="photoWall">
+    <div class="container">
+      <h1 class="text-light mb-3">Mongo Scraper</h1>
+      <p class="text-muted">New York Times Edition</p>
+      <button class="btn btn-info text-warning">Learn More</button>
+    </div>
+  </div>
+  <div 
+  class="text-center bg-warning text-info m-3 p-3"
+  *ngIf="articlesMissing">
+      Uh Oh. Looks like we don't have any new articles.
+  </div>
+  <div *ngIf="!articlesMissing" class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="list-group" *ngFor="let article of scrapedArticles | async; let i = index">
+            <div class="list-group-item text-center">
+              <a href="{{ article.link | append:'https://www.nytimes.com' }}" target="_blank" class="list-group-item list-group-item-action text-center">
+                {{article.title}}
+              </a>
+              <hr>
+              {{article.body}}
+              <span *ngIf="article.isFavorite">
+                <mat-icon [ngStyle]="{'color': 'red'}" (click)="onFav(i)" style="cursor:pointer;">favorite</mat-icon>
+              </span>
+              <span *ngIf="!article.isFavorite">
+                <mat-icon color="primary" (click)="onFav(i)" style="cursor:pointer;">favorite_border</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="text-center bg-info text-warning m-3 p-4">What would you like to Do?</div>
+  <div class="d-flex align-items-center flex-column m-3 text-info p-2 shadow-lg">
+    <a 
+    class="h4 text-warning" 
+    [routerLink]="['']"
+    (click)="onScrape()">Try Scraping New Articles</a>
+    <a class="h4 text-warning" [routerLink]="['']">Go to Saved Articles</a>
+  </div>
+
+  <!-- Footer -->
+<footer class="page-footer font-small blue pt-4">
+
+
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 text-info">© 2019 Copyright: New York Times Mongo Scraper
+      
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
